@@ -1,11 +1,13 @@
 from flask import Flask
 from flask import render_template
+from flask import request
 import os
 import pymysql
 import sqlite3
 #from google.cloud import storage
 import mysql.connector
-
+from mysql.connector import errorcode
+import pandas as pd
 from flask import jsonify
 
 app = Flask(__name__) 
@@ -27,8 +29,9 @@ def open_connection():
     #                       unix_socket=unix_socket, db=db_name,
     #                        cursorclass=pymysql.cursors.DictCursor)
     print("not good")
+    
+    
     conn = mysql.connector.connect(host= '35.202.234.243', user = 'root', password = 'Hackaton', database = 'product')
-    print("half-success")
     return conn
 
     
@@ -37,14 +40,35 @@ def getObjects():
     
     print("success")
     with conn.cursor() as cursor:
-        result = cursor.execute('SELECT * FROM objects;')
-        products = cursor.fetchall()
-        if result > 0:
-            got_prods = jsonify(products)
-        else:
-            got_prods = 'No products in DB'
+        result = cursor.execute("SELECT * FROM objects;")
+        products = pd.DataFrame(cursor.fetchall())
+        #if result > 0:
+        frame = pd.DataFrame(products)
+        print(frame)
+        #else:
+        #    got_prods = 'No products in DB'
     conn.close()
-    return got_prods
+    return frame
+
+def getFilteredObjects(filter = None):
+    conn = open_connection()
+    with conn.cursor() as cursor:
+        query = """SELECT * FROM objects"""
+        if filter != None:
+            query += """ WHERE TypeOfObject = %s or Marque = %s or RefObject = %s;"""
+            print(query, (filter,))
+            result = cursor.execute(query, (filter,filter, filter))
+        else:
+            result = cursor.execute(query)
+            
+        #result = cursor.execute('SELECT * FROM objects where TypeOfObject = filter;')
+        products = pd.DataFrame(cursor.fetchall())
+        #if result > 0:
+        frame = pd.DataFrame(products)
+        #else:
+        #    got_prods = 'No products in DB'
+    conn.close()
+    return frame
     
 #@app.route('/')
 @app.route('/')
@@ -55,12 +79,23 @@ def home():
 @app.route('/search/')
 def search():
     #requete totale
-    print(getObjects())
-    return render_template('search.html')
+    obj = getObjects()
+    numbers = range(len(obj[0]))
+    return render_template('search.html', nums = numbers, object1 = obj[0], object2= obj[1], object3 = obj[2], object4 = obj[3], object5 = obj[4], object6 = obj[5], object7 = obj[6], object8 = obj[7], object9 = obj[8], object10 = obj[9], object11 = obj[10], object12 = obj[11], object13 = obj[12])
 
-@app.route('/fetch/')
+@app.route('/fetch/', methods=['GET', 'POST'])
 def fetch():
-    pass
+    filterValue = request.form['search']
+    obj = getFilteredObjects(filterValue)
+    if(len(obj) > 0):
+        numbers = range(len(obj[0]))
+        isResult = True
+    else:
+        numbers = 0
+        isResult = False
+        obj = [0] * 13
+    return render_template('search.html', flag = isResult, nums = numbers, object1 = obj[0], object2= obj[1], object3 = obj[2], object4 = obj[3], object5 = obj[4], object6 = obj[5], object7 = obj[6], object8 = obj[7], object9 = obj[8], object10 = obj[9], object11 = obj[10], object12 = obj[11], object13 = obj[12])
+
 
 
 

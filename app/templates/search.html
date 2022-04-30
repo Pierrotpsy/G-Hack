@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bio Farming an Agriculture Category Flat Bootstrap Responsive website Template | Home :: w3layouts</title>
+<title>Energy sources for everyday products</title>
 <!--mobile apps-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -89,19 +89,80 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<p>Here you can search for many products, for example by indicating a type, a manufacturer, or even the product reference !</p>
 			
 			<div class="search-container" style="text-align:center">
-				<form action="/action_page.php">
-					<input type="text" placeholder="Search.." name="search">
-					<button type="submit"><i class="fa fa-search"></i></button>
+				<form action="/fetch/" method="post">
+					<tbody>
+						  <tr>
+						<th><input type="text" placeholder="Search.." id="search" name = "search" value={{texts}}></th>
+						<th><input type="submit" name="button" class="btn btn-success" value="Send Request"></a></th>
+					      </tr>
+					 </tbody>
 				</form>
 			</div>
 		</div>
 	</div>
 	<!--//welcome-->
+	<style>       
+		hr{
+			height: 1px;
+			background-color: #00FF00;
+		}
+		table, th, td {
+			border: 1px solid black;
+		}
+		th, td {
+			padding: 10px;
+		}
+	</style>
 	<!--services-->
 	<div class="services">
 		<div class="container">
 			<h3 class="title">Results</h3>
-			
+			{% if flag == True %}
+			{% for i in nums %}
+			<br>
+    		<div><p>
+				The <h2>{{object2[i]}}</h2> was made by <h2>{{object3[i]}}</h2> and it's the <h2>{{object4[i]}}</h2> model.
+			</p></div>
+			<br>
+			<div>
+				It was made using
+				<center>
+					<table>
+						<tr>
+							<th>Solar energy</th>
+							<th>Wind energy</th>
+							<th>Water</th>
+							<th>Geothermal</th>
+							<th>Nuclear</th>
+							<th>Coal</th>
+							<th>Petroleum</th>
+							<th>Natural Gas</th>
+							<th>Hydrocabons</th>
+						</tr>
+						<tr>
+							<td>{{object5[i]}} %</td>
+							<td>{{object6[i]}} % </td>
+							<td>{{object7[i]}} % </td>
+							<td>{{object8[i]}} % </td>
+							<td>{{object9[i]}} % </td>
+							<td>{{object10[i]}} % </td>
+							<td>{{object11[i]}} % </td>
+							<td>{{object12[i]}} % </td>
+							<td>{{object13[i]}} % </td>
+						</tr>
+					</table>
+				</center>
+				<br>
+				<hr style="width:50%;text-align:center">
+			</div>
+    		{% endfor %}
+			{% else %}
+			<div>
+				<center><p>
+					There are no results for this search. Please try again.
+				</p></center>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 	<!--//services-->
