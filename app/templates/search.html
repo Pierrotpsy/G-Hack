@@ -50,8 +50,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<h1><a href="index.html"><img src="/https://img.icons8.com/external-flaticons-flat-flat-icons/512/000000/external-energy-renewable-energy-flaticons-flat-flat-icons-2.png" alt="" /></a></h1>
 				</div>
 				<div class="banner-slider">
-					<h2>Hello!</h2>
-					<h3>By Using Public Data</h3>
 					<h4>We can tell you if products were manufactured using
 						<div class="pushEffect">
 							<span>renewable energy</span>
@@ -87,7 +85,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="container">
 			<h3 class="title">Search for a product</h3>
 			<p>Here you can search for many products, for example by indicating a type, a manufacturer, or even the product reference !</p>
-			
+			<br><br><br>
 			<div class="search-container" style="text-align:center">
 				<form action="/fetch/" method="post">
 					<tbody>
@@ -120,7 +118,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			{% if flag == True %}
 			{% for i in nums %}
 			<br>
-    		<div><p>
+    		<div class="split left"><p>
 				The <h2>{{object2[i]}}</h2> was made by <h2>{{object3[i]}}</h2> and it's the <h2>{{object4[i]}}</h2> model.
 			</p></div>
 			<br>
@@ -152,6 +150,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</tr>
 					</table>
 				</center>
+				<br><br>
+				<div class="split right">
+					<center>
+    					<img src= {{object16[i]}} alt="" height="500">
+					</center>
+				<div>
 				<br>
 				<hr style="width:50%;text-align:center">
 			</div>
@@ -184,7 +188,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					  $('[data-toggle="tooltip"]').tooltip()
 					})</script>
 				</div>
-				<p>© 2016 Bio Farming . All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>					
+				<p>© 2022 TheLastMinuteCoders . All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>					
 			</div>
 		</div>
 	</div>
